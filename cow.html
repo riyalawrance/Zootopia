@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Moo Translator 🐄</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background: linear-gradient(to bottom right, #ffecb3, #ffe6e6);
+      text-align: center;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #4b2e00;
+      text-shadow: 2px 2px #fff176;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    #output {
+      font-size: 22px;
+      margin: 20px auto;
+      background: #fff8dc;
+      padding: 20px;
+      border-radius: 20px;
+      border: 4px dotted #b8860b;
+      max-width: 500px;
+      position: relative;
+    }
+
+    #output::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #fff8dc;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 25px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 12px;
+      border: none;
+      background-color: #ffbb00;
+      color: #4b2e00;
+      font-weight: bold;
+      box-shadow: 0 4px #cc9900;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #ffdd33;
+      box-shadow: 0 6px #cc9900;
+    }
+
+    #cowContainer {
+      margin-top: 20px;
+      position: relative;
+    }
+
+    #cowImg {
+      width: 200px;
+      animation: floatCow 4s infinite ease-in-out;
+    }
+
+    #cowImg.talking {
+      transform: scale(1.1) rotate(2deg);
+    }
+
+    @keyframes floatCow {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .moo-emoji {
+      position: absolute;
+      font-size: 24px;
+      animation: floatMoo 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatMoo {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-600px) rotate(360deg); opacity: 0; }
+    }
+
+    #micBtn.glow {
+      animation: micGlow 1s infinite alternate;
+    }
+
+    @keyframes micGlow {
+      from { box-shadow: 0 0 10px 2px #ff5722; }
+      to { box-shadow: 0 0 25px 5px #ff9800; }
+    }
+
+    .fun-section {
+      margin-top: 30px;
+    }
+
+    .fun-box {
+      font-size: 18px;
+      margin-top: 10px;
+      background: #fff;
+      border: 2px dashed #8d6e63;
+      padding: 10px 20px;
+      border-radius: 15px;
+      display: inline-block;
+      min-height: 40px;
+      max-width: 90%;
+    }
+
+
+    @keyframes moveCow {
+      0% { left: 0; transform: scaleX(1); }
+      100% { left: calc(100% - 100px); transform: scaleX(-1); }
+    }
+
+    /* Floating emojis background */
+    .floating-emoji {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0.5;
+      animation: floatEmoji 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatEmoji {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🐮 Moo Translator</h1>
+  <p>Click the mic, say something, and hear it in Cow Language!</p>
+
+  <button id="micBtn">🎤 Speak</button>
+
+  <div id="output">Your moo translation will appear here...</div>
+
+  <div id="cowContainer">
+    <img id="cowImg" src="images/cow.png" alt="Cow" />
+  </div>
+
+  <!-- Fun Additions -->
+  <div class="fun-section">
+    <button onclick="generateCowName()">🐄 Generate Cow Name</button>
+    <div id="cowName" class="fun-box">Cow name will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateCowFact()">📘 Cow Fact</button>
+    <div id="cowFact" class="fun-box">A fun cow fact will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateCowQuote()">😂 Cow Quote</button>
+    <div id="cowQuote" class="fun-box">A funny quote from a wise cow...</div>
+  </div>
+
+
+
+  <!-- Sounds -->
+  <audio id="moo1" src="sounds/cow1.wav"></audio>
+  <audio id="moo2" src="sounds/cow2.wav"></audio>
+  <audio id="moo3" src="sounds/cow3.wav"></audio>
+  <audio id="moo4" src="sounds/cow4.wav"></audio>
+  <audio id="moo5" src="sounds/cow5.wav"></audio>
+
+  <script>
+    const output = document.getElementById("output");
+    const cowImg = document.getElementById("cowImg");
+    const micBtn = document.getElementById("micBtn");
+
+    function translateToMoo(text) {
+      const moos = ["Moo", "moo", "MoOo", "Mooo", "MooOo", "MOO"];
+      return text.split(" ").map(() =>
+        moos[Math.floor(Math.random() * moos.length)]
+      ).join(" ");
+    }
+
+    function playCowSoundsForSentence(sentence) {
+      const sounds = ["moo1", "moo2", "moo3", "moo4", "moo5"];
+      const words = sentence.split(" ");
+      let index = 0;
+
+      function playNext() {
+        if (index >= words.length) return;
+
+        const randomMoo = sounds[Math.floor(Math.random() * sounds.length)];
+        const sound = document.getElementById(randomMoo);
+
+        cowImg.classList.add("talking");
+        sound.currentTime = 0;
+        sound.play();
+
+        const emoji = document.createElement("div");
+        emoji.className = "moo-emoji";
+        emoji.style.left = Math.random() * 80 + 10 + "%";
+        emoji.textContent = "🐮";
+        document.body.appendChild(emoji);
+        setTimeout(() => document.body.removeChild(emoji), 5000);
+
+        sound.onended = () => {
+          cowImg.classList.remove("talking");
+          index++;
+          playNext();
+        };
+      }
+
+      playNext();
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    micBtn.onclick = () => {
+      output.textContent = "🎙️ Listening...";
+      micBtn.classList.add("glow");
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      micBtn.classList.remove("glow");
+      const transcript = event.results[0][0].transcript;
+      const mooText = translateToMoo(transcript);
+      output.textContent = `"${transcript}" ➡️ ${mooText}`;
+      playCowSoundsForSentence(transcript);
+    };
+
+    recognition.onerror = () => {
+      micBtn.classList.remove("glow");
+      output.textContent = "❌ Could not recognize speech. Try again!";
+    };
+
+    // Cow Name Generator
+    function generateCowName() {
+      const names = ["Moozarella", "Sir Loin", "Milkshake", "Beefy", "Moolinda", "Cowzilla", "Mooana", "Chuck the Cow"];
+      const cowName = names[Math.floor(Math.random() * names.length)];
+      document.getElementById("cowName").textContent = cowName;
+    }
+
+    // Cow Fact Generator
+    function generateCowFact() {
+      const facts = [
+        "Cows have best friends and get stressed when separated!",
+        "Cows can smell things up to 6 miles away!",
+        "They have a nearly 360-degree field of vision.",
+        "Cows spend about 10 hours a day lying down.",
+        "They can sleep while standing up!",
+        "Cows chew at least 50 times per minute.",
+        "A cow produces around 6 gallons of milk per day!"
+      ];
+      document.getElementById("cowFact").textContent =
+        facts[Math.floor(Math.random() * facts.length)];
+    }
+
+    // Funny Cow Quote Generator
+    function generateCowQuote() {
+      const quotes = [
+        "I'm not mad, I'm just a little moooo-dy!",
+        "Udderly fabulous, darling!",
+        "I like my grass shaken, not stirred.",
+        "Don’t have a cow, man — I already did.",
+        "Moo-re problems, moo-re fun!",
+        "Moochas gracias for the hay!",
+        "Horn-y but harmless!"
+      ];
+      document.getElementById("cowQuote").textContent =
+        quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    // Floating Emoji Generator
+    const funnyEmojis = ["😂", "🐮", "🧀", "😜", "🤠", "🌾", "🥛"];
+    function createFloatingEmoji() {
+      const emoji = document.createElement("div");
+      emoji.className = "floating-emoji";
+      emoji.textContent = funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)];
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.top = "100vh";
+      emoji.style.fontSize = (20 + Math.random() * 20) + "px";
+      emoji.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 12000);
+    }
+
+    setInterval(createFloatingEmoji, 1000);
+  </script>
+</body>
+</html>

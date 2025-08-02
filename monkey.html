@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monkey Translator 🐒</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom right, #c8e6c9, #a5d6a7); /* jungle green background */
+      text-align: center;
+      padding: 30px;
+      color: #1b5e20;
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #bf360c; /* deep orange */
+      text-shadow: 2px 2px #ffe082;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+      background-color: #c5e1a5; /* jungle gold-green */
+      color: #1b5e20;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #aed581;
+      transform: scale(1.05);
+    }
+
+    #output, #monkeyName, #monkeyFact, #monkeyQuote {
+      margin-top: 15px;
+      font-size: 20px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #2e7d32; /* dark jungle green */
+      border: 2px solid #1b5e20;
+      min-height: 50px;
+      color: #ffffff; /* white text for contrast */
+    }
+
+    #monkeyContainer img {
+      width: 250px;
+      margin-top: 20px;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    #monkeyContainer img.talking {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .fun-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .box {
+      width: 30%;
+      min-width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐒 Monkey Translator</h1>
+  <p>Click the mic, speak something, and hear it in Monkey Language!</p>
+
+  <button id="micBtn">🎤 Speak</button>
+
+  <div id="output">Your Monkey translation will appear here...</div>
+
+  <div id="monkeyContainer">
+    <img id="monkeyImg" src="images/monkey.png" alt="Dancing Monkey" />
+  </div>
+
+  <div class="fun-boxes">
+    <div class="box">
+      <button onclick="generateMonkeyName()">🧠 Monkey Name</button>
+      <div id="monkeyName">Click to get a funky monkey name!</div>
+    </div>
+    <div class="box">
+      <button onclick="generateMonkeyFact()">📚 Monkey Fact</button>
+      <div id="monkeyFact">Learn a cheeky monkey fact!</div>
+    </div>
+    <div class="box">
+      <button onclick="generateMonkeyQuote()">😂 Monkey Quote</button>
+      <div id="monkeyQuote">Click for a hilarious monkey quote!</div>
+    </div>
+  </div>
+
+  <!-- Monkey Sounds -->
+  <audio id="mon1" src="sounds/mon1.mp3"></audio>
+  <audio id="mon2" src="sounds/mon2.mp3"></audio>
+
+  <script>
+    const output = document.getElementById("output");
+    const monkeyImg = document.getElementById("monkeyImg");
+
+    function translateToMonkey(text) {
+      const monkeys = ["Ooh", "Aaah", "Eek", "Ooh-ooh", "Aaah-aaah", "Eek-eek"];
+      return text.split(" ").map(word => {
+        return Array.from(word).map(() =>
+          monkeys[Math.floor(Math.random() * monkeys.length)]
+        ).join(" ");
+      }).join(" | ");
+    }
+
+    function playMonkeySoundsForSentence(sentence) {
+      const sounds = ["mon1", "mon2"];
+      const words = sentence.split(" ");
+      let index = 0;
+
+      function playNext() {
+        if (index >= words.length) return;
+
+        const randomMonkey = sounds[Math.floor(Math.random() * sounds.length)];
+        const sound = document.getElementById(randomMonkey);
+
+        monkeyImg.classList.add("talking");
+        sound.currentTime = 0;
+        sound.play();
+
+        sound.onended = () => {
+          monkeyImg.classList.remove("talking");
+          index++;
+          playNext();
+        };
+      }
+
+      playNext();
+    }
+
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    document.getElementById("micBtn").onclick = () => {
+      output.textContent = "🎙️ Listening...";
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      const monkeyText = translateToMonkey(transcript);
+      output.textContent = `"${transcript}" ➡️ ${monkeyText}`;
+      playMonkeySoundsForSentence(transcript);
+    };
+
+    recognition.onerror = () => {
+      output.textContent = "❌ Could not recognize speech. Try again!";
+    };
+
+    // Monkey fun features
+    const names = ["Banana Joe", "Coconut Carl", "Swingy Steve", "Momo", "Chimpy", "Captain Banana"];
+    const facts = [
+      "Monkeys can understand basic arithmetic.",
+      "Capuchin monkeys use tools like stones and sticks.",
+      "Howler monkeys are the loudest land animals.",
+      "Some monkeys sleep sitting up!",
+      "Monkeys express emotions just like humans."
+    ];
+    const quotes = [
+      "“I didn’t choose the jungle life, the jungle life chose me.”",
+      "“Keep calm and eat bananas 🍌.”",
+      "“Swing hard or swing home!”",
+      "“No monkeying around... unless it’s fun!”",
+      "“Life’s better upside down in a tree!”"
+    ];
+
+    function generateMonkeyName() {
+      document.getElementById("monkeyName").textContent =
+        "Your monkey name is: 🐵 " + names[Math.floor(Math.random() * names.length)];
+    }
+
+    function generateMonkeyFact() {
+      document.getElementById("monkeyFact").textContent =
+        "🧠 Fact: " + facts[Math.floor(Math.random() * facts.length)];
+    }
+
+    function generateMonkeyQuote() {
+      document.getElementById("monkeyQuote").textContent =
+        "😂 Quote: " + quotes[Math.floor(Math.random() * quotes.length)];
+    }
+  </script>
+</body>
+</html>

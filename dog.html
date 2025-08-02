@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Translator 🐶</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background: linear-gradient(to bottom right, #cceeff, #e0f7ff); /* light blue gradient */
+      text-align: center;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #001f3f;
+      text-shadow: 2px 2px #66ccff;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    #output {
+      font-size: 22px;
+      margin: 20px auto;
+      background: #003366; /* dark blue */
+      padding: 20px;
+      border-radius: 20px;
+      border: 4px dotted #3399cc;
+      max-width: 500px;
+      position: relative;
+      color: white;
+    }
+
+    #output::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #003366;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 25px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 12px;
+      border: none;
+      background-color: #0055aa; /* dark blue */
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px #003366;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #007acc;
+      box-shadow: 0 6px #003366;
+    }
+
+    #dogContainer {
+      margin-top: 20px;
+      position: relative;
+    }
+
+    #micBtn.glow {
+      animation: micGlow 1s infinite alternate;
+    }
+
+    @keyframes micGlow {
+      from { box-shadow: 0 0 10px 2px #3399ff; }
+      to { box-shadow: 0 0 25px 5px #66ccff; }
+    }
+
+    .fun-section {
+      margin-top: 30px;
+    }
+
+    .fun-box {
+      font-size: 18px;
+      margin-top: 10px;
+      background: #003366; /* dark blue */
+      border: 2px dashed #66ccff;
+      padding: 10px 20px;
+      border-radius: 15px;
+      display: inline-block;
+      min-height: 40px;
+      max-width: 90%;
+      color: white;
+    }
+
+    .floating-emoji {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0.5;
+      animation: floatEmoji 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatEmoji {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ✅ New WTHdog GIF style */
+    #wthdogGif {
+      margin-top: 30px;
+      max-width: 300px;
+      width: 80%;
+      border-radius: 20px;
+      animation: wiggle 2s infinite;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🐶 Dog Translator</h1>
+  <p>Click the mic, say something, and hear it in Dog Language!</p>
+
+  <button id="micBtn">🎤 Speak</button>
+
+  <div id="output">Your dog translation will appear here...</div>
+
+  <!-- ✅ New WTHdog GIF -->
+  <img id="wthdogGif" src="images/WTHdog.gif" alt="Funny Dog GIF">
+
+  <div id="dogContainer"></div>
+
+  <!-- Fun Additions -->
+  <div class="fun-section">
+    <button onclick="generateDogName()">🐶 Generate Dog Name</button>
+    <div id="dogName" class="fun-box">Dog name will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateDogFact()">📘 Dog Fact</button>
+    <div id="dogFact" class="fun-box">A fun dog fact will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateDogQuote()">😂 Dog Quote</button>
+    <div id="dogQuote" class="fun-box">A funny quote from a wise dog...</div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="bark1" src="sounds/dog1.wav"></audio>
+  <audio id="bark2" src="sounds/dog2.wav"></audio>
+  <audio id="bark3" src="sounds/dog3.wav"></audio>
+  <audio id="bark4" src="sounds/dog4.wav"></audio>
+  <audio id="bark5" src="sounds/dog5.wav"></audio>
+
+  <script>
+    const output = document.getElementById("output");
+    const micBtn = document.getElementById("micBtn");
+
+    function translateToBark(text) {
+      const barks = ["Bark", "bark", "Woof", "WOOF", "Arf", "ruff"];
+      return text.split(" ").map(() =>
+        barks[Math.floor(Math.random() * barks.length)]
+      ).join(" ");
+    }
+
+    function playDogSoundsForSentence(sentence) {
+      const sounds = ["bark1", "bark2", "bark3", "bark4", "bark5"];
+      const words = sentence.split(" ");
+      let index = 0;
+
+      function playNext() {
+        if (index >= words.length) return;
+
+        const randomBark = sounds[Math.floor(Math.random() * sounds.length)];
+        const sound = document.getElementById(randomBark);
+
+        sound.currentTime = 0;
+        sound.play();
+
+        const emoji = document.createElement("div");
+        emoji.className = "floating-emoji";
+        emoji.style.left = Math.random() * 80 + 10 + "%";
+        emoji.textContent = "🐶";
+        document.body.appendChild(emoji);
+        setTimeout(() => document.body.removeChild(emoji), 5000);
+
+        sound.onended = () => {
+          index++;
+          playNext();
+        };
+      }
+
+      playNext();
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    micBtn.onclick = () => {
+      output.textContent = "🎙️ Listening...";
+      micBtn.classList.add("glow");
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      micBtn.classList.remove("glow");
+      const transcript = event.results[0][0].transcript;
+      const dogText = translateToBark(transcript);
+      output.textContent = `"${transcript}" ➡️ ${dogText}`;
+      playDogSoundsForSentence(transcript);
+    };
+
+    recognition.onerror = () => {
+      micBtn.classList.remove("glow");
+      output.textContent = "❌ Could not recognize speech. Try again!";
+    };
+
+    function generateDogName() {
+      const names = ["Bark Twain", "Sir Waggington", "Chewbacca", "Furdinand", "Bark Obama", "Paw-casso", "Dogzilla", "Woofgang Amadeus"];
+      const dogName = names[Math.floor(Math.random() * names.length)];
+      document.getElementById("dogName").textContent = dogName;
+    }
+
+    function generateDogFact() {
+      const facts = [
+        "Dogs have best friends and get stressed when separated!",
+        "Dogs can smell things up to 6 miles away!",
+        "They have a nearly 360-degree field of vision.",
+        "Dogs spend about 10 hours a day lying down.",
+        "Dogs chew at least 50 times per minute.",
+        "A dog produces around 6 gallons of milk per day!"
+      ];
+      document.getElementById("dogFact").textContent =
+        facts[Math.floor(Math.random() * facts.length)];
+    }
+
+    function generateDogQuote() {
+      const quotes = [
+        "I'm not mad, I'm just a little ruff around the edges!",
+        "Paw-sitively fabulous, darling!",
+        "I like my treats shaken, not stirred.",
+        "Don’t have a cow, man — I already did.",
+        "Moo-re problems, moo-re fun!",
+        "Moochas gracias for the hay!",
+        "Horn-y but harmless!"
+      ];
+      document.getElementById("dogQuote").textContent =
+        quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    const funnyEmojis = ["😂", "🐶", "🐾", "😜", "🤠", "🌾", "🥛"];
+    function createFloatingEmoji() {
+      const emoji = document.createElement("div");
+      emoji.className = "floating-emoji";
+      emoji.textContent = funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)];
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.top = "100vh";
+      emoji.style.fontSize = (20 + Math.random() * 20) + "px";
+      emoji.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 12000);
+    }
+
+    setInterval(createFloatingEmoji, 1000);
+  </script>
+</body>
+</html>

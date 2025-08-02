@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cat Translator 🐄</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', sans-serif;
+      background-color: #e6ccff; /* light purple */
+      text-align: center;
+      padding: 30px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 50px;
+      color: #4a0072; /* dark purple */
+      text-shadow: 2px 2px #ce93d8;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #4a0072;
+    }
+
+    #output {
+      font-size: 22px;
+      margin: 20px auto;
+      background: #7b1fa2; /* dark purple */
+      color: #ffffff;
+      padding: 20px;
+      border-radius: 20px;
+      border: 4px dotted #ce93d8;
+      max-width: 500px;
+      position: relative;
+    }
+
+    #output::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 20px solid #7b1fa2;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 25px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 12px;
+      border: none;
+      background-color: #6a1b9a; /* dark purple */
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 4px #4a0072;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #8e24aa;
+      box-shadow: 0 6px #4a0072;
+    }
+
+    #catContainer {
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .cat-emoji {
+      position: absolute;
+      font-size: 24px;
+      animation: floatCat 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatCat {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-600px) rotate(360deg); opacity: 0; }
+    }
+
+    #micBtn.glow {
+      animation: micGlow 1s infinite alternate;
+    }
+
+    @keyframes micGlow {
+      from { box-shadow: 0 0 10px 2px #ab47bc; }
+      to { box-shadow: 0 0 25px 5px #ce93d8; }
+    }
+
+    .fun-section {
+      margin-top: 30px;
+    }
+
+    .fun-box {
+      font-size: 18px;
+      margin-top: 10px;
+      background: #6a1b9a; /* dark purple */
+      border: 2px dashed #ce93d8;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 15px;
+      display: inline-block;
+      min-height: 40px;
+      max-width: 90%;
+    }
+
+    #movingCat {
+      display: none;
+    }
+
+    .floating-emoji {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0.5;
+      animation: floatEmoji 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatEmoji {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🐱 Cat Translator</h1>
+  <p>Click the mic, say something, and hear it in Cat Language!</p>
+
+  <button id="micBtn">🎤 Speak</button>
+
+  <div id="output">Your cat translation will appear here...</div>
+
+  <div id="catContainer">
+    <img id="catGif" src="images/dancingcat.gif" alt="Dancing Cat" style="width: 200px; border-radius: 20px;" />
+  </div>
+
+  <!-- Fun Additions -->
+  <div class="fun-section">
+    <button onclick="generateCatName()">🐱 Generate Cat Name</button>
+    <div id="catName" class="fun-box">Cat name will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateCatFact()">📘 Cat Fact</button>
+    <div id="catFact" class="fun-box">A fun cat fact will appear here...</div>
+
+    <br><br>
+
+    <button onclick="generateCatQuote()">😂 Cat Quote</button>
+    <div id="catQuote" class="fun-box">A funny quote from a wise cat...</div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="meow1" src="sounds/cat1.wav"></audio>
+  <audio id="meow2" src="sounds/cat2.wav"></audio>
+  <audio id="meow3" src="sounds/cat3.mp3"></audio>
+  <audio id="meow4" src="sounds/cat4.wav"></audio>
+  <audio id="meow5" src="sounds/cat5.wav"></audio>
+
+  <script>
+    const output = document.getElementById("output");
+    const micBtn = document.getElementById("micBtn");
+
+    function translateToMeow(text) {
+      const meows = ["Meow", "meow", "MeOo", "Meeeow", "MeowOo", "MEEOW"];
+      return text.split(" ").map(() =>
+        meows[Math.floor(Math.random() * meows.length)]
+      ).join(" ");
+    }
+
+    function playCatSoundsForSentence(sentence) {
+      const sounds = ["meow1", "meow2", "meow3", "meow4", "meow5"];
+      const words = sentence.split(" ");
+      let index = 0;
+
+      function playNext() {
+        if (index >= words.length) return;
+
+        const randomMeow = sounds[Math.floor(Math.random() * sounds.length)];
+        const sound = document.getElementById(randomMeow);
+
+        sound.currentTime = 0;
+        sound.play();
+
+        const emoji = document.createElement("div");
+        emoji.className = "meow-emoji";
+        emoji.style.left = Math.random() * 80 + 10 + "%";
+        emoji.textContent = "🐱";
+        document.body.appendChild(emoji);
+        setTimeout(() => document.body.removeChild(emoji), 5000);
+
+        sound.onended = () => {
+          index++;
+          playNext();
+        };
+      }
+
+      playNext();
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+
+    micBtn.onclick = () => {
+      output.textContent = "🎙️ Listening...";
+      micBtn.classList.add("glow");
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      micBtn.classList.remove("glow");
+      const transcript = event.results[0][0].transcript;
+      const catText = translateToMeow(transcript);
+      output.textContent = `"${transcript}" ➡️ ${catText}`;
+      playCatSoundsForSentence(transcript);
+    };
+
+    recognition.onerror = () => {
+      micBtn.classList.remove("glow");
+      output.textContent = "❌ Could not recognize speech. Try again!";
+    };
+
+    function generateCatName() {
+      const names = ["Meowzarella", "Sir Purrs-a-lot", "Catnip Everclean", "Furrball", "Mewtwo", "Catniss Everclean", "Purrlock Holmes", "Chuck the Cat"];
+      const catName = names[Math.floor(Math.random() * names.length)];
+      document.getElementById("catName").textContent = catName;
+    }
+
+    function generateCatFact() {
+      const facts = [
+        "Cats have five toes on their front paws, but only four toes on their back paws.",
+        "A group of cats is called a clowder.",
+        "Cats can rotate their ears 180 degrees.",
+        "The world's largest cat measured 48.5 inches long.",
+        "They can sleep while standing up!",
+        "Cats purr at a frequency of 25 to 150 Hertz, which is known to be therapeutic.",
+        "A cat produces around 6 ounces of saliva per day!"
+      ];
+      document.getElementById("catFact").textContent =
+        facts[Math.floor(Math.random() * facts.length)];
+    }
+
+    function generateCatQuote() {
+      const quotes = [
+        "I'm not mad, I'm just a little meow-dy!",
+        "Purr-fectly fabulous, darling!",
+        "I like my catnip shaken, not stirred.",
+        "Don’t have a cat, man — I already did.",
+        "Meow-re problems, meow-re fun!",
+        "Meow-chas gracias for the fish!",
+        "Horn-y but harmless!"
+      ];
+      document.getElementById("catQuote").textContent =
+        quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    const funnyEmojis = ["😂", "🐱", "🧀", "😜", "🤠", "🌾", "🥛"];
+    function createFloatingEmoji() {
+      const emoji = document.createElement("div");
+      emoji.className = "floating-emoji";
+      emoji.textContent = funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)];
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.top = "100vh";
+      emoji.style.fontSize = (20 + Math.random() * 20) + "px";
+      emoji.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 12000);
+    }
+
+    setInterval(createFloatingEmoji, 1000);
+  </script>
+</body>
+</html>
