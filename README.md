@@ -56,26 +56,23 @@ For Software:
              /sounds/ – Contains animal sound files (e.g., moo.mp3, bark.mp3, etc.).
 
 # Screenshots
-!The translation along with the persons dog name and a fun fact is also provided
-*translating to dog languaue*
+Transalation to dog language
+*The translation along with the persons dog name and a fun fact is also provided*
 <img width="1894" height="904" alt="Screenshot 2025-08-02 060620" src="https://github.com/user-attachments/assets/11dc1158-6598-4424-9c57-663555002100" />
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+Translation to cow language
 <img width="1898" height="911" alt="Screenshot 2025-08-02 060331" src="https://github.com/user-attachments/assets/6d4bd114-1797-4ca3-928d-6c554ebbc2b5" />
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+Translation to monkey language
 <img width="1894" height="905" alt="Screenshot 2025-08-02 061123" src="https://github.com/user-attachments/assets/d2258254-817e-4b84-b6b5-e757a46e15f0" />
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+
+https://github.com/user-attachments/assets/b3a3a6c7-dfb7-457e-98c6-79817d3c8874
+The video shows the various web pages and interfaces of the website. It starts with the intro page and then proceeds to the next page to translate to cow language.The mooing sound of the cow is also provided with the output.Input is taken as voice recognition.
+
 
 # Additional Demos
 [Add any extra demo materials/links]
