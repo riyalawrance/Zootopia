@@ -42,6 +42,7 @@ For Software: This project is a static frontend web app built using HTML, CSS, a
 
 ### Project Documentation
 For Software:
+
              index.html – The main landing page titled Zootopia, where users choose an animal.
 
              cow.html, dog.html, cat.html, monkey.html – Individual animal pages with voice interaction and sound response.
@@ -57,12 +58,15 @@ For Software:
 # Screenshots (Add at least 3)
 ![Screenshot1](Add screenshot 1 here with proper name)
 *Add caption explaining what this shows*
+<img width="1894" height="904" alt="Screenshot 2025-08-02 060620" src="https://github.com/user-attachments/assets/11dc1158-6598-4424-9c57-663555002100" />
 
 ![Screenshot2](Add screenshot 2 here with proper name)
 *Add caption explaining what this shows*
+<img width="1898" height="911" alt="Screenshot 2025-08-02 060331" src="https://github.com/user-attachments/assets/6d4bd114-1797-4ca3-928d-6c554ebbc2b5" />
 
 ![Screenshot3](Add screenshot 3 here with proper name)
 *Add caption explaining what this shows*
+<img width="1894" height="905" alt="Screenshot 2025-08-02 061123" src="https://github.com/user-attachments/assets/d2258254-817e-4b84-b6b5-e757a46e15f0" />
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
