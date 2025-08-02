@@ -55,9 +55,9 @@ For Software:
 
              /sounds/ – Contains animal sound files (e.g., moo.mp3, bark.mp3, etc.).
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+# Screenshots
+!The translation along with the persons dog name and a fun fact is also provided
+*translating to dog languaue*
 <img width="1894" height="904" alt="Screenshot 2025-08-02 060620" src="https://github.com/user-attachments/assets/11dc1158-6598-4424-9c57-663555002100" />
 
 ![Screenshot2](Add screenshot 2 here with proper name)
