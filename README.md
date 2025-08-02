@@ -2,46 +2,56 @@
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: CodeFreaks
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Riya Lawrance - Rajiv Gandhi Institute Of Technology,Kottayam
+- Member 2: Gowry Saraswathy B - Rajiv Gandhi Institute Of Technology,Kottayam
+
 
 ### Project Description
-[2-3 lines about what your project does]
+Zootopia" is a fun, interactive web portal where users can choose their spirit animal—cow, cat, dog, or monkey—each leading to a unique voice-based translator experience. The homepage features animated animal icons, playful UI elements, and engaging visuals that invite users into a whimsical world where animals 'speak' back through custom web pages.
+
 
 ### The Problem (that doesn't exist)
 [What ridiculous problem are you solving?]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+People often talk to animals for fun, but animals never respond. There’s no way to hear a funny or cute reply. This project makes it possible for users to speak and get a playful sound response from their chosen animal.
+
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Languages used
+    HTML
+    CSS
+    JavaScript
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- Tools used
+    VS Code
+    Live Server Extension
+    Image editing tools
+    Notepad
 
 ### Implementation
-For Software:
+For Software: This project is a static frontend web app built using HTML, CSS, and JavaScript. It is fully client-side and requires no backend or installation of external libraries.
 # Installation
-[commands]
-
-# Run
-[commands]
+  VS code with live server/Notepad
 
 ### Project Documentation
-For Software:
+For Software:index.html – The main landing page titled Zootopia, where users choose an animal.
+
+             cow.html, dog.html, cat.html, monkey.html – Individual animal pages with voice interaction and sound response.
+
+             style.css – Contains styles for layout, colors, fonts, and animations.
+
+             script.js – Handles voice recognition and triggers corresponding animal sounds and animations.
+
+             /images/ – Contains animal images and GIFs (e.g., cow1.png, cat1.jpg, etc.).
+
+             /sounds/ – Contains animal sound files (e.g., moo.mp3, bark.mp3, etc.).
 
 # Screenshots (Add at least 3)
 ![Screenshot1](Add screenshot 1 here with proper name)
@@ -57,25 +67,6 @@ For Software:
 ![Workflow](Add your workflow/architecture diagram here)
 *Add caption explaining your workflow*
 
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
 ### Project Demo
 # Video
 [Add your demo video link here]
@@ -87,7 +78,7 @@ For Hardware:
 ## Team Contributions
 - [Name 1]: [Specific contributions]
 - [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- 
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
