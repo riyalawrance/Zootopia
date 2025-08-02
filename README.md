@@ -73,6 +73,8 @@ Translation to monkey language
 https://github.com/user-attachments/assets/b3a3a6c7-dfb7-457e-98c6-79817d3c8874
 The video shows the various web pages and interfaces of the website. It starts with the intro page and then proceeds to the next page to translate to cow language.The mooing sound of the cow is also provided with the output.Input is taken as voice recognition.
 
+## Project Link
+https://riyalawrance.github.io/Zootopia/intro.html
 
 
 ## Team Contributions
