@@ -15,10 +15,10 @@ Zootopia" is a fun, interactive web portal where users can choose their spirit a
 
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+People often talk to animals for fun, but animals never respond. There’s no way to hear a funny or cute reply. This project makes it possible for users to speak and get a playful sound response from their chosen animal.
 
 ### The Solution (that nobody asked for)
-People often talk to animals for fun, but animals never respond. There’s no way to hear a funny or cute reply. This project makes it possible for users to speak and get a playful sound response from their chosen animal.
+Zootopia lets you talk to animals… well, kind of. It’s a one-way voice translator where you speak, and your chosen animal responds with its signature sound — moo, bark, meow, or screech. No real communication, but maximum entertainment. It's the perfect mix of chaos, cuteness, and absolutely unnecessary innovation.
 
 
 ## Technical Details
@@ -41,7 +41,8 @@ For Software: This project is a static frontend web app built using HTML, CSS, a
   VS code with live server/Notepad
 
 ### Project Documentation
-For Software:index.html – The main landing page titled Zootopia, where users choose an animal.
+For Software:
+             index.html – The main landing page titled Zootopia, where users choose an animal.
 
              cow.html, dog.html, cat.html, monkey.html – Individual animal pages with voice interaction and sound response.
 
@@ -76,9 +77,8 @@ For Software:index.html – The main landing page titled Zootopia, where users c
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- 
+- Riya Lawrance:  Worked on the JavaScript functionality, including voice recognition, sound playback, and page-specific interactivity.
+- Gowry Saraswathy B: Designed and implemented the CSS styling, layout, UI animations, and overall visual design of the project.
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
